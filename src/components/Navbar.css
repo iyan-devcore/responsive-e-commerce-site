@@ -169,3 +169,71 @@
     justify-content: center;
     border: 2px solid white;
 }
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #4b5563;
+    padding: 4px;
+}
+
+/* Responsive Styles */
+@media (max-width: 968px) {
+    .navbar-container {
+        padding: 0 20px;
+        position: relative;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+        z-index: 1002;
+    }
+
+    /* Hide search on tablet/mobile to save space or move it */
+    .search-container {
+        display: none;
+    }
+
+    .navbar-links {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 75%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: #ffffff;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 80px 24px 24px;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
+        transition: left 0.3s ease-in-out;
+        z-index: 1001;
+        gap: 20px;
+    }
+
+    .navbar-links.active {
+        left: 0;
+    }
+
+    .nav-link {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1f2937;
+        display: block;
+        width: 100%;
+        padding: 8px 0;
+    }
+
+    .nav-link::after {
+        display: none;
+    }
+
+    .navbar-actions {
+        margin-left: auto;
+        gap: 12px;
+        padding-right: 12px;
+    }
+}

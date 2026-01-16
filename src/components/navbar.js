@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
         <nav className="navbar-container">
+            {/* Mobile Menu Button */}
+            <button className="mobile-menu-btn" onClick={toggleMenu} aria-label="Toggle menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {isMenuOpen ? (
+                        <path d="M18 6L6 18M6 6l12 12" />
+                    ) : (
+                        <path d="M3 12h18M3 6h18M3 18h18" />
+                    )}
+                </svg>
+            </button>
+
             {/* Logo Section */}
             <Link to="/" className="navbar-logo">
                 <div className="logo-icon">T</div>
@@ -12,12 +29,12 @@ const Navbar = () => {
             </Link>
 
             {/* Navigation Links */}
-            <ul className="navbar-links">
-                <li><Link to="/" className="nav-link">Home</Link></li>
-                <li><Link to="/shop" className="nav-link">Shop</Link></li>
-                <li><Link to="/smartphones" className="nav-link">Smartphones</Link></li>
-                <li><Link to="/laptops" className="nav-link">Laptops</Link></li>
-                <li><Link to="/audio" className="nav-link">Audio</Link></li>
+            <ul className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
+                <li onClick={() => setIsMenuOpen(false)}><Link to="/" className="nav-link">Home</Link></li>
+                <li onClick={() => setIsMenuOpen(false)}><Link to="/shop" className="nav-link">Shop</Link></li>
+                <li onClick={() => setIsMenuOpen(false)}><Link to="/smartphones" className="nav-link">Smartphones</Link></li>
+                <li onClick={() => setIsMenuOpen(false)}><Link to="/laptops" className="nav-link">Laptops</Link></li>
+                <li onClick={() => setIsMenuOpen(false)}><Link to="/audio" className="nav-link">Audio</Link></li>
             </ul>
 
             {/* Search and Icons */}
