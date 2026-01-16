@@ -1,5 +1,6 @@
 import './App.css';
 import Navbar from "./components/navbar";
+import Footer from "./components/Footer";
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="/laptops" element={<div style={{ padding: 20 }}>Laptops Category</div>} />
         <Route path="/audio" element={<div style={{ padding: 20 }}>Audio Category</div>} />
       </Routes>
+      <Footer />
     </div>
   );
 }

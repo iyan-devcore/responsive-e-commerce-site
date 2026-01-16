@@ -1,0 +1,188 @@
+.footer-container {
+    background-color: #ffffff;
+    padding: 80px 40px 40px;
+    border-top: 1px solid #e5e7eb;
+    margin-top: auto;
+    /* Push to bottom if flex container */
+    font-family: 'Inter', sans-serif;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 60px;
+}
+
+/* Brand Section */
+.footer-brand {
+    flex: 1;
+    min-width: 300px;
+    max-width: 350px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    text-decoration: none;
+}
+
+/* Reusing logo styles from navbar implicitly or redefining for independence */
+.footer-logo-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.footer-logo-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1f2937;
+    letter-spacing: -0.5px;
+}
+
+.footer-desc {
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+.subscribe-form {
+    display: flex;
+    gap: 12px;
+}
+
+.subscribe-input {
+    flex: 1;
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.subscribe-input:focus {
+    border-color: #2563eb;
+    background-color: #fff;
+}
+
+.subscribe-btn {
+    background-color: #3b82f6;
+    /* Lighter blue as per image button usually */
+    /* Or gradient similar to logo */
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.subscribe-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Links Sections */
+.footer-links-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 60px;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-heading {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.footer-link {
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 12px;
+    transition: color 0.2s;
+}
+
+.footer-link:hover {
+    color: #2563eb;
+}
+
+/* Bottom Bar */
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 32px;
+    border-top: 1px solid #f3f4f6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.copyright {
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+.social-links {
+    display: flex;
+    gap: 24px;
+}
+
+.social-icon {
+    color: #9ca3af;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.social-icon:hover {
+    color: #1f2937;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .footer-links-container {
+        gap: 40px;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+}
