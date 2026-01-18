@@ -3,12 +3,11 @@ import Navbar from "./components/navbar";
 import Footer from "./components/Footer";
 import Register from "./components/register";
 import Login from "./components/login";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <div>
-      <BrowserRouter>
         <Navbar />
         <Routes>
           <Route path="/" element={<div style={{ padding: 20 }}>Home Page</div>} />
@@ -20,7 +19,6 @@ function App() {
           <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />
-      </BrowserRouter>
     </div>
   );
 }
