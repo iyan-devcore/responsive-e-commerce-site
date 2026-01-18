@@ -4,6 +4,7 @@ import Home from "./components/home";
 import Footer from "./components/Footer";
 import Register from "./components/register";
 import Login from "./components/login";
+import ErrorPage from "./components/error";
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/audio" element={<div style={{ padding: 20 }}>Audio Category</div>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
       <Footer />
     </div>

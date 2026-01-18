@@ -9,7 +9,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm h-[70px]">
+        <nav className="sticky top-0 z-50 bg-white lg:bg-white/70 lg:backdrop-blur-md border-b border-gray-200 shadow-sm h-[70px]">
             <div className="h-full px-4 md:px-10 flex items-center justify-between container mx-auto">
                 {/* Mobile Menu Button */}
                 <button

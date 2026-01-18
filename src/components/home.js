@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const categories = [
     { id: 1, name: 'Smartphones', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=200&auto=format&fit=crop', path: '/smartphones' },
@@ -11,24 +15,92 @@ const categories = [
 ];
 
 const products = [
-    { id: 1, name: 'Wireless Headphones', price: '₹2,499', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=400&auto=format&fit=crop', rating: 4.5 },
-    { id: 2, name: 'Smart Watch Series 7', price: '₹24,999', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=400&auto=format&fit=crop', rating: 4.8 },
-    { id: 3, name: 'Running Shoes', price: '₹3,999', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=400&auto=format&fit=crop', rating: 4.2 },
-    { id: 4, name: 'Leather Bag', price: '₹5,499', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=400&auto=format&fit=crop', rating: 4.7 },
+    { id: 1, name: 'Wireless Headphones', price: '₹2,499', image: '/images/headphones_prod.png', rating: 4.5 },
+    { id: 2, name: 'Smart Watch Series 7', price: '₹24,999', image: '/images/smartwatch_prod.png', rating: 4.8 },
+    { id: 3, name: 'Running Shoes', price: '₹3,999', image: '/images/runningshoes_prod.png', rating: 4.2 },
+    { id: 4, name: 'Leather Bag', price: '₹5,499', image: '/images/leatherbag_prod.png', rating: 4.7 },
 ];
 
 const Home = () => {
     const navigate = useNavigate();
+    const mainRef = useRef(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            // Hero Animation
+            gsap.from(".hero-content", {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out",
+                delay: 0.2
+            });
+
+            // Categories Animation
+            gsap.from(".category-item", {
+                scrollTrigger: {
+                    trigger: ".categories-section",
+                    start: "top 80%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "back.out(1.7)"
+            });
+
+            // Products Animation
+            gsap.from(".product-card", {
+                scrollTrigger: {
+                    trigger: ".products-section",
+                    start: "top 75%",
+                },
+                y: 60,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power2.out"
+            });
+
+            // Promo Banner Animation
+            gsap.from(".promo-banner", {
+                scrollTrigger: {
+                    trigger: ".promo-section",
+                    start: "top 80%",
+                },
+                scale: 0.95,
+                opacity: 0,
+                duration: 1,
+                ease: "power2.out"
+            });
+
+            // Trust Badges Animation
+            gsap.from(".trust-badge", {
+                scrollTrigger: {
+                    trigger: ".trust-section",
+                    start: "top 85%",
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "power2.out"
+            });
+
+        }, mainRef);
+
+        return () => ctx.revert();
+    }, []);
 
     return (
-        <div className="min-h-screen bg-gray-50 font-sans">
+        <div ref={mainRef} className="min-h-screen bg-gray-50 font-sans overflow-hidden">
             {/* Hero Section */}
             <div
                 className="relative h-[400px] md:h-[500px] bg-cover bg-center flex items-center"
                 style={{ backgroundImage: `url('/images/hero_bg.png')` }}
             >
                 <div className="absolute inset-0 bg-black bg-opacity-30"></div>
-                <div className="container mx-auto px-4 relative z-10 text-white">
+                <div className="container mx-auto px-4 relative z-10 text-white hero-content">
                     <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">
                         Discover the Future <br /> of Shopping
                     </h1>
@@ -45,11 +117,11 @@ const Home = () => {
             </div>
 
             {/* Featured Categories */}
-            <div className="container mx-auto px-4 py-12">
+            <div className="container mx-auto px-4 py-12 categories-section">
                 <h2 className="text-2xl font-bold mb-8 text-gray-800">Shop by Category</h2>
                 <div className="grid grid-cols-3 md:grid-cols-6 gap-6">
                     {categories.map((cat) => (
-                        <div key={cat.id} className="group cursor-pointer text-center" onClick={() => navigate(cat.path)}>
+                        <div key={cat.id} className="group cursor-pointer text-center category-item" onClick={() => navigate(cat.path)}>
                             <div className="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full overflow-hidden border-4 border-white shadow-md group-hover:shadow-xl transition duration-300 transform group-hover:scale-105">
                                 <img src={cat.image} alt={cat.name} className="w-full h-full object-cover" />
                             </div>
@@ -60,7 +132,7 @@ const Home = () => {
             </div>
 
             {/* Featured Products */}
-            <div className="bg-white py-12">
+            <div className="bg-white py-12 products-section">
                 <div className="container mx-auto px-4">
                     <div className="flex justify-between items-center mb-8">
                         <h2 className="text-2xl font-bold text-gray-800">Best Sellers</h2>
@@ -68,7 +140,7 @@ const Home = () => {
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
                         {products.map((product) => (
-                            <div key={product.id} className="bg-white rounded-lg shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden">
+                            <div key={product.id} className="bg-white rounded-lg shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden product-card">
                                 <div className="h-48 overflow-hidden bg-gray-100 relative group">
                                     <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
                                     <div className="absolute top-2 right-2 bg-yellow-400 text-xs font-bold px-2 py-1 rounded">
@@ -94,9 +166,9 @@ const Home = () => {
             </div>
 
             {/* Promo Banner */}
-            <div className="container mx-auto px-4 py-12">
+            <div className="container mx-auto px-4 py-12 promo-section">
                 <div
-                    className="rounded-2xl overflow-hidden bg-cover bg-center h-64 flex items-center shadow-xl relative"
+                    className="rounded-2xl overflow-hidden bg-cover bg-center h-64 flex items-center shadow-xl relative promo-banner"
                     style={{ backgroundImage: `url('/images/promo_bg.png')` }}
                 >
                     <div className="absolute inset-0 bg-gradient-to-r from-red-600/80 to-transparent"></div>
@@ -111,7 +183,7 @@ const Home = () => {
             </div>
 
             {/* Trust Badges */}
-            <div className="bg-gray-100 py-12">
+            <div className="bg-gray-100 py-12 trust-section">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
                         {[
@@ -120,7 +192,7 @@ const Home = () => {
                             { title: 'Easy Returns', desc: '7 days return policy', icon: 'M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z' },
                             { title: '24/7 Support', desc: 'Dedicated support', icon: 'M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z' },
                         ].map((item, idx) => (
-                            <div key={idx} className="flex flex-col items-center p-4">
+                            <div key={idx} className="flex flex-col items-center p-4 trust-badge">
                                 <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-blue-600 shadow mb-4">
                                     <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-6 h-6" viewBox="0 0 24 24">
                                         <path d={item.icon}></path>
