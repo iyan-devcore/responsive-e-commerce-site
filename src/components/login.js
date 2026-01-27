@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import CustomAlert from './CustomAlert';
 
 const MailIcon = () => (
     <svg className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -46,6 +47,8 @@ const GithubIcon = () => (
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [alert, setAlert] = useState({ show: false, message: '', type: 'error' });
+    const [errors, setErrors] = useState({});
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -64,21 +67,56 @@ const Login = () => {
         setShowPassword(!showPassword);
     };
 
+    const validateForm = () => {
+        const newErrors = {};
+
+        if (!formData.email.trim()) {
+            newErrors.email = 'Email is required';
+        } else {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                newErrors.email = 'Please enter a valid email address';
+            }
+        }
+
+        if (!formData.password) {
+            newErrors.password = 'Password is required';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        // Add login logic here
+
+        // Clear previous alert
+        setAlert({ show: false, message: '', type: 'error' });
+
+        if (validateForm()) {
+            console.log('Form submitted:', formData);
+            // Simulate successful login
+            setAlert({ show: true, message: 'Login successful!', type: 'success' });
+            // Add login logic here
+        }
     };
 
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+            {alert.show && (
+                <CustomAlert
+                    message={alert.message}
+                    type={alert.type}
+                    onClose={() => setAlert({ ...alert, show: false })}
+                />
+            )}
             <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 md:p-10">
                 <div className="text-center mb-8">
                     <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome back</h2>
                     <p className="text-sm text-gray-500">Sign in to your account to continue</p>
                 </div>
 
-                <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+                <form className="flex flex-col gap-5" onSubmit={handleSubmit} noValidate>
                     <div className="space-y-1.5">
                         <label htmlFor="email" className="text-sm font-medium text-gray-700 block">Email</label>
                         <div className="relative">
@@ -88,12 +126,12 @@ const Login = () => {
                                 id="email"
                                 name="email"
                                 placeholder="you@example.com"
-                                className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                                className={`w-full pl-10 pr-4 py-2.5 bg-white border ${errors.email ? 'border-red-300 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'} rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200`}
                                 value={formData.email}
                                 onChange={handleChange}
-                                required
                             />
                         </div>
+                        {errors.email && <p className="text-xs text-red-500 mt-1 pl-1">{errors.email}</p>}
                     </div>
 
                     <div className="space-y-1.5">
@@ -105,10 +143,9 @@ const Login = () => {
                                 id="password"
                                 name="password"
                                 placeholder="Enter your password"
-                                className="w-full pl-10 pr-10 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                                className={`w-full pl-10 pr-10 py-2.5 bg-white border ${errors.password ? 'border-red-300 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'} rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200`}
                                 value={formData.password}
                                 onChange={handleChange}
-                                required
                             />
                             <button
                                 type="button"
@@ -119,6 +156,7 @@ const Login = () => {
                                 {showPassword ? <EyeOffIcon /> : <EyeIcon />}
                             </button>
                         </div>
+                        {errors.password && <p className="text-xs text-red-500 mt-1 pl-1">{errors.password}</p>}
                     </div>
 
                     <div className="flex items-center justify-between text-sm">
